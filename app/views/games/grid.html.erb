@@ -1,0 +1,15 @@
+<div class="container">
+
+
+  <div class="question">
+    <h1>Here is your grid of letters:</h1>
+  <p><%= @letters.join %></p>
+  </div>
+
+  <form class="form-style-5" action="/results" method="get">
+    <span class="label">Enter Your Word Here!</span><input type="text" name="scrabble_word" placeholder="Make it big!">
+    <input type="submit" value="Get your score!">
+  </form>
+
+</div>
+
