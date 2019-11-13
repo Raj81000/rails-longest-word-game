@@ -1,21 +1,22 @@
 class GamesController < ApplicationController
 
   def grid
-    grid = @letters
     @letters = ''
     @letters << random_letter_method
     @letters << random_vowel_method.join
     @letters = @letters.chars.sort_by { rand }
     # ('a'..'z').to_a.sample(10)
+    # grid = @letters
   end
 
   def results
     @aggregate_score = 0
     given_answer = params[:scrabble_word]
+    grid = JSON.parse(params[:letters])
     answer_array = given_answer.chars
     answer_array.each do |answer_letter|
       if letter_included(grid, answer_letter) == true
-        grid = deduct_letter(grid, answer_letter)
+        deduct_letter(grid, answer_letter)
         @aggregate_score += 1
       else
         @aggregate_score = 0
