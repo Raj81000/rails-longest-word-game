@@ -1,12 +1,15 @@
 class GamesController < ApplicationController
 
   def grid
-    grid = @letters
+    # empty string
     @letters = ''
+    # empty string populated using method below
     @letters << random_letter_method
     @letters << random_vowel_method.join
+    # mixes up the letters so vowels are not all at the end
     @letters = @letters.chars.sort_by { rand }
-    # ('a'..'z').to_a.sample(10)
+    # @grid_letters = @letters
+    # ('a'..'z').to_a.sample(10) [this is an alternative way but don't get more than one of any letter]
   end
 
   def results
@@ -14,8 +17,9 @@ class GamesController < ApplicationController
     given_answer = params[:scrabble_word]
     answer_array = given_answer.chars
     answer_array.each do |answer_letter|
-      if letter_included(grid, answer_letter) == true
-        grid = deduct_letter(grid, answer_letter)
+      # THIS STILL WON'T GET A VALID ARRAY FOR @LETTERS.  NIL
+      if letter_included(@letters, answer_letter) == true
+        @letters = deduct_letter(@letters, answer_letter)
         @aggregate_score += 1
       else
         @aggregate_score = 0
@@ -27,12 +31,14 @@ class GamesController < ApplicationController
   private
   def random_letter_method
     size = random_number
+    # creates an array of the consonants
     charset = %w{b c d f g h j k l m n p q r s t v w x y z}
+    # maps over specified size of letters and joins together to form a string.  why is the _to_a thing there?
     random_letters = (0...size).map { charset.to_a[rand(charset.size)] }.join
   end
 
   def random_vowel_method
-    random_vowels = ""
+    random_vowels = ''
     size = random_vowel_number
     charset = %w{a e i o u}
     random_vowels = (0...size).map { charset.to_a[rand(charset.size)] }.join
@@ -48,6 +54,8 @@ class GamesController < ApplicationController
   end
 
   def letter_included(array, letter)
+    # ARRAY IS STILL NIL...
+    # LETTER IS OKAY
     if array.include?(letter)
       true
     else
