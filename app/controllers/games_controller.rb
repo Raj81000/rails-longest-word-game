@@ -1,20 +1,18 @@
 class GamesController < ApplicationController
 
   def grid
-    # empty string
     @letters = ''
     # empty string populated using method below
     @letters << random_letter_method
     @letters << random_vowel_method.join
     # mixes up the letters so vowels are not all at the end
     @letters = @letters.chars.sort_by { rand }
-    # @grid_letters = @letters
-    # ('a'..'z').to_a.sample(10) [this is an alternative way but don't get more than one of any letter]
   end
 
   def results
     @aggregate_score = 0
     given_answer = params[:scrabble_word]
+    grid = JSON.parse(params[:letters])
     answer_array = given_answer.chars
     answer_array.each do |answer_letter|
       # THIS STILL WON'T GET A VALID ARRAY FOR @LETTERS.  NIL
