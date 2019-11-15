@@ -15,9 +15,11 @@ class GamesController < ApplicationController
     grid = JSON.parse(params[:letters])
     answer_array = given_answer.chars
     answer_array.each do |answer_letter|
-      # THIS STILL WON'T GET A VALID ARRAY FOR @LETTERS.  NIL
-      if letter_included(@letters, answer_letter) == true
-        @letters = deduct_letter(@letters, answer_letter)
+      # if letter_included(@letters, answer_letter) == true
+      #   @letters = deduct_letter(@letters, answer_letter)
+      #   @aggregate_score += 1
+        if letter_included(grid, answer_letter) == true
+        grid = deduct_letter(grid, answer_letter)
         @aggregate_score += 1
       else
         @aggregate_score = 0
